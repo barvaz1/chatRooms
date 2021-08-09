@@ -1,12 +1,10 @@
 import sys
+import client
 
 from PyQt5.QtGui import QFont
 from PyQt5.uic import loadUi
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QDialog, QApplication
-
-FONT = 'Times'
-FONT_SIZE = 15
 
 
 class OpenScreen(QDialog):
@@ -15,13 +13,9 @@ class OpenScreen(QDialog):
         loadUi("openScreen.ui", self)
         # self.button1.clicked.connect(self.goToScreen2)
 
-        # change the text front in the text edit to  "'Times', 15"
-        self.textEdit_user_name.setFont(QFont(FONT, FONT_SIZE))
-        self.textEdit_password.setFont(QFont(FONT, FONT_SIZE))
+        self.button_sign_in.clicked.connect(self.change_screen_SignUp)
 
-        self.button_sign_in.clicked.connect(self.change_screen)
-
-    def change_screen(self):
+    def change_screen_SignUp(self):
         global widget
         signUpScreen = SignUpScreen()
         widget.addWidget(signUpScreen)
@@ -32,9 +26,23 @@ class SignUpScreen(QDialog):
     def __init__(self):
         super(SignUpScreen, self).__init__()
         loadUi("signUpScreen.ui", self)
-        # self.button1.clicked.connect(self.goToScreen2)
 
+        self.button_back.clicked.connect(self.change_screen_OpenScreen)  # back to main screen
+        self.button_sign_up.clicked.connect(self.sign_up)  # sign up
         # change the text front in the text edit to  "'Times', 15"
+
+    def change_screen_OpenScreen(self):
+        global widget
+        openScreen = OpenScreen()
+        widget.addWidget(openScreen)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
+
+    def sign_up(self):
+        print(1)
+        #self.label_error.setText(
+        client.sign_up(self.textEdit_user_name.toPlainText(), self.textEdit_E_mail.toPlainText(),
+                           self.textEdit_fname.toPlainText(), self.textEdit_lname.toPlainText(),
+                           self.textEdit_password.toPlainText(), self.textEdit_password2.toPlainText())
 
 
 widget = None
