@@ -15,13 +15,20 @@ def sendChetMsg(str1):
     print("The server sent " + data)
 
 
-def sign_up(user_name, eMail, first_name, last_name, password1, password2):
+def sign_up(user_name, last_name, first_name, eMail, Mobile_num, password1, password2):
     print(2)
     # Are they all not 0?
-    for msg in ["sign_up", user_name, eMail, first_name, last_name, password1]:
+    for msg in ["sign_up", user_name, eMail, first_name, last_name, password1, Mobile_num]:
         if msg is None:
             return
     print(3)
+
+    # Mobile_num len =10
+    if len(Mobile_num) != 10:
+        return "Mobile num can only have 10 digits"
+
+    if not Mobile_num.isnumeric():
+        "Mobile num can only have 10 digits"
     # check the the user name
     if len(user_name) <= 4:
         return "user name can only have more then 4 letters"
@@ -49,10 +56,13 @@ def sign_up(user_name, eMail, first_name, last_name, password1, password2):
             print(10)
             return "name can only have more then 1 letters"
     print(11)
-    for msg in ["sign_up", user_name, eMail, first_name, last_name, password1]:
+
+    i = -1
+    for msg in ["sign_up", user_name,  first_name, last_name, eMail, Mobile_num, password1]:
         print(msg)
         data = ""
         while data != msg:
+            my_socket.send()
             my_socket.send(msg.encode())  # send to the server data
             data = my_socket.recv(1024).decode()
             print("The server sent " + data)

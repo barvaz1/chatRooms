@@ -5,6 +5,8 @@ MAX_MSG_LENGTH = 1024
 SERVER_PORT = 80
 SERVER_IP = "0.0.0.0"
 
+SIGN_UP = "sign_up"
+
 
 def main():
     # open socket with client
@@ -34,7 +36,8 @@ def main():
                 print("Data from existing client")
                 data = current_socket.recv(MAX_MSG_LENGTH).decode()
 
-                # empty data?
+
+                #empty data?
                 if data == "":
                     print("Connection closed", )
                     client_sockets.remove(current_socket)

@@ -39,10 +39,11 @@ class SignUpScreen(QDialog):
 
     def sign_up(self):
         print(1)
-        #self.label_error.setText(
-        client.sign_up(self.textEdit_user_name.toPlainText(), self.textEdit_E_mail.toPlainText(),
-                           self.textEdit_fname.toPlainText(), self.textEdit_lname.toPlainText(),
-                           self.textEdit_password.toPlainText(), self.textEdit_password2.toPlainText())
+        # self.label_error.setText(
+        client.sign_up(self.textEdit_user_name.toPlainText(), self.textEdit_lname.toPlainText(),
+                       self.textEdit_fname.toPlainText(), self.textEdit_E_mail.toPlainText(),
+                       self.textEdit_phone_num.toPlainText(),
+                       self.textEdit_password.toPlainText(), self.textEdit_password2.toPlainText())
 
 
 widget = None
