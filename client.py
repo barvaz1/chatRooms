@@ -4,10 +4,12 @@ import re
 my_socket = socket.socket()
 my_socket.connect(('127.0.0.1', 80))
 
+SIGN_UP = "sign"
+DIVIDER = "&"
+
 
 def sendChetMsg(str1):
     """
-
     :param str1: string
     """
     my_socket.send(str1.encode())
@@ -57,15 +59,20 @@ def sign_up(user_name, last_name, first_name, eMail, Mobile_num, password1, pass
             return "name can only have more then 1 letters"
     print(11)
 
-    i = -1
-    for msg in ["sign_up", user_name,  first_name, last_name, eMail, Mobile_num, password1]:
-        print(msg)
-        data = ""
-        while data != msg:
-            my_socket.send()
-            my_socket.send(msg.encode())  # send to the server data
-            data = my_socket.recv(1024).decode()
-            print("The server sent " + data)
+    print("The server sent " + send_cmd([SIGN_UP, user_name, last_name, first_name, eMail, Mobile_num, password1]))
+
+
+def send_cmd(lst):
+    print(12)
+    # The form of the message: cmd param1 param2 param3...&
+    data = " ".join(lst)
+
+    print(data)
+    data = "" + data + DIVIDER + str(len(data))
+
+    print(data)
+    my_socket.send(data.encode())
+    return my_socket.recv(1024).decode()
 
 
 def disconnectServer():
