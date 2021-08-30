@@ -1,8 +1,9 @@
 import sqlite3
 from sqlite3 import Error
 
-
 SUCCESS = "success"
+
+
 def create_connection(db_file):
     """ create a database connection to a SQLite database """
     conn = None
@@ -21,6 +22,11 @@ def close_connection(conn):
 
 
 def create_user(conn, user):
+    # is the user is ok?
+    msg = check_user(conn, user)
+    if msg != SUCCESS:
+        return msg
+
     sql = """ INSERT INTO USERS (
                       usrID,
                       usrLastName,
@@ -45,8 +51,8 @@ def create_user(conn, user):
     cur.execute(sql)
 
     conn.commit()
-
-    return cur.lastrowid
+    # cur.lastrowid
+    return SUCCESS
 
 
 def check_user(conn, user):
@@ -83,8 +89,20 @@ def check_user(conn, user):
         print("user mobile number exists")
         return "user mobile number exists"
 
-    return "SUCCESS"
+    return SUCCESS
 
+
+def check_password(conn, user_name, password):
+    sql = """SELECT usrPWD FROM USERS WHERE usrID = '{}'  LIMIT 1"""
+    sql = sql.format(user_name)
+    print(sql)
+    cur = conn.cursor()
+    answer = cur.execute(sql).fetchall()
+    print(answer)
+    print(password)
+    if answer[0][0] == password:
+        return SUCCESS
+    return "check your password"
 
 if __name__ == '__main__':
     create_connection(r"Users.db")

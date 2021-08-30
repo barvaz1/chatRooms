@@ -5,6 +5,7 @@ my_socket = socket.socket()
 my_socket.connect(('127.0.0.1', 80))
 
 SIGN_UP = "sign"
+LOG_IN = "log_"
 DIVIDER = "&"
 
 
@@ -20,9 +21,9 @@ def sendChetMsg(str1):
 def sign_up(user_name, last_name, first_name, eMail, Mobile_num, password1, password2):
     print(2)
     # Are they all not 0?
-    for msg in ["sign_up", user_name, eMail, first_name, last_name, password1, Mobile_num]:
-        if msg is None:
-            return
+    for msg in [SIGN_UP, user_name, eMail, first_name, last_name, password1, Mobile_num]:
+        if msg == "":
+            return "You must fill in all the details"
     print(3)
 
     # Mobile_num len =10
@@ -59,7 +60,15 @@ def sign_up(user_name, last_name, first_name, eMail, Mobile_num, password1, pass
             return "name can only have more then 1 letters"
     print(11)
 
-    print("The server sent " + send_cmd([SIGN_UP, user_name, last_name, first_name, eMail, Mobile_num, password1]))
+    return send_cmd([SIGN_UP, user_name, last_name, first_name, eMail, Mobile_num, password1])
+
+
+def log_in(user_name, password):
+    for msg in [LOG_IN, user_name, password]:
+        if msg == "":
+            return "You must fill in all the details"
+
+    return send_cmd([LOG_IN, user_name, password])
 
 
 def send_cmd(lst):
