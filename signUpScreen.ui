@@ -315,7 +315,7 @@ background-color: rgb(209, 197, 178);</string>
      <string notr="true">font: 8pt &quot;MS Reference Sans Serif&quot;;</string>
     </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;hi!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QTextEdit" name="textEdit_phone_num">
@@ -367,8 +367,7 @@ p, li { white-space: pre-wrap; }
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">
-background-color: rgb(230, 220, 164);</string>
+    <string notr="true">background-color: rgb(209, 197, 178);</string>
    </property>
    <property name="text">
     <string>back</string>

@@ -6,7 +6,6 @@ from PyQt5.uic import loadUi
 from PyQt5 import QtWidgets, QtCore
 from PyQt5.QtWidgets import QDialog, QApplication
 
-
 SUCCESS = "success"
 
 
@@ -23,11 +22,17 @@ def change_screen_OpenScreen():
     widget.addWidget(OpenScreen())
     widget.setCurrentIndex(widget.currentIndex() + 1)
 
+
 def change_screen_lobby(name):
     global widget
 
     widget.addWidget(LobbyScreen(name))
     widget.setCurrentIndex(widget.currentIndex() + 1)
+
+
+def log_out():
+    client.log_out()
+    change_screen_OpenScreen()
 
 
 class OpenScreen(QDialog):
@@ -65,13 +70,18 @@ class SignUpScreen(QDialog):
     def sign_up(self):
         print(1)
         # self.label_error.setText(
-        text = client.sign_up(self.textEdit_user_name.toPlainText(), self.textEdit_lname.toPlainText(),
-                              self.textEdit_fname.toPlainText(), self.textEdit_E_mail.toPlainText(),
-                              self.textEdit_phone_num.toPlainText(),
-                              self.textEdit_password.toPlainText(), self.textEdit_password2.toPlainText())
-        print(text)
-        self.label_error.setText(text)
-        self.label_error.setStyleSheet("color: red")
+        msg = client.sign_up(self.textEdit_user_name.toPlainText(), self.textEdit_lname.toPlainText(),
+                             self.textEdit_fname.toPlainText(), self.textEdit_E_mail.toPlainText(),
+                             self.textEdit_phone_num.toPlainText(),
+                             self.textEdit_password.toPlainText(), self.textEdit_password2.toPlainText())
+        print(msg)
+        if msg == SUCCESS:
+
+            change_screen_lobby(self.textEdit_user_name.toPlainText())
+        else:
+            # show the Error msg
+            self.label_error.setText(msg)
+            self.label_error.setStyleSheet("color: red")
 
 
 class LobbyScreen(QDialog):
@@ -83,9 +93,13 @@ class LobbyScreen(QDialog):
         # change the text front in the text edit to  "'Times', 15"
         self.label_welcome.setText("welcome, " + self.name + "!")
         self.label_welcome.setStyleSheet("""font: 36pt "MV Boli"; background-color: rgb(220, 234, 221); border-color: 
-                rgb(255, 169, 21); border-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(255, 178, 
-                102, 255), stop:0.55 rgba(235, 148, 61, 255), stop:0.98 rgba(0, 0, 0, 255), stop:1 rgba(0, 0, 0, 0));""")
+        rgb(255, 169, 21); border-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(255, 178, 
+        102, 255), stop:0.55 rgba(235, 148, 61, 255), stop:0.98 rgba(0, 0, 0, 255), stop:1 rgba(0, 0, 0, 0));""")
         self.label_welcome.setAlignment(QtCore.Qt.AlignCenter)
+
+        # return button
+        self.button_back.clicked.connect(log_out)
+
 
 widget = None
 

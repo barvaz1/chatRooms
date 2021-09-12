@@ -5,9 +5,10 @@ my_socket = socket.socket()
 my_socket.connect(('127.0.0.1', 80))
 
 SIGN_UP = "sign"
-LOG_IN = "log_"
+LOG_IN = "loin"
 DIVIDER = "&"
-
+LOG_OUT = "lout"
+ERROR = "Error"
 
 def sendChetMsg(str1):
     """
@@ -69,6 +70,10 @@ def log_in(user_name, password):
             return "You must fill in all the details"
 
     return send_cmd([LOG_IN, user_name, password])
+
+
+def log_out():
+    send_cmd(LOG_OUT)
 
 
 def send_cmd(lst):
