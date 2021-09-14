@@ -10,13 +10,7 @@ DIVIDER = "&"
 LOG_OUT = "lout"
 ERROR = "Error"
 
-def sendChetMsg(str1):
-    """
-    :param str1: string
-    """
-    my_socket.send(str1.encode())
-    data = my_socket.recv(1024).decode()
-    print("The server sent " + data)
+
 
 
 def sign_up(user_name, last_name, first_name, eMail, Mobile_num, password1, password2):

@@ -15,10 +15,14 @@ NAME = "name"
 LOG_OUT = "lout"
 SUCCESS = "success"
 ERROR = "Error"
+GET_USERS = "usrs"
 
 # The number of the room where a client is
 OPEN_ROOM = 0
 LOBBY = 1
+CHAT_ROOM_SPORT = 2
+CHAT_ROOM_GAMING = 3
+CHAT_ROOM_COOKING = 4
 
 
 def check_msg(data):
@@ -61,7 +65,8 @@ def main():
 
         # create list of all the sockets
         client_sockets_lst = list(client_sockets.keys())
-
+        left_the_chats = []
+        join_the_chats = []
         # socket before connection
         r_list, w_list, x_list = select.select([server_socket] + client_sockets_lst, client_sockets_lst, [])
 
@@ -71,7 +76,8 @@ def main():
             if current_socket is server_socket:
                 connection, client_address = current_socket.accept()
                 print("New client joined!", client_address)
-                client_sockets[connection] = [OPEN_ROOM, None]
+                # connection: room, name, new sockets, new msg
+                client_sockets[connection] = [OPEN_ROOM, None, {}, []]
 
             else:
                 # get data from existing client
@@ -104,7 +110,9 @@ def main():
 
                     else:
                         messages_to_send.append((current_socket, "Error, please try again"))
-
+        if messages_to_send:
+            print(1)
+            print(messages_to_send)
         for message in messages_to_send:
             current_socket, data = message
             if current_socket in w_list:

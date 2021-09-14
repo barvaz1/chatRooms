@@ -7,6 +7,9 @@ from PyQt5 import QtWidgets, QtCore
 from PyQt5.QtWidgets import QDialog, QApplication
 
 SUCCESS = "success"
+CHAT_ROOM_SPORT = 2
+CHAT_ROOM_GAMING = 3
+CHAT_ROOM_COOKING = 4
 
 
 def change_screen_SignUp():
@@ -27,6 +30,13 @@ def change_screen_lobby(name):
     global widget
 
     widget.addWidget(LobbyScreen(name))
+    widget.setCurrentIndex(widget.currentIndex() + 1)
+
+
+def change_screen_RoomScreen(room, name):
+    global widget
+
+    widget.addWidget(RoomsScreen(room, name))
     widget.setCurrentIndex(widget.currentIndex() + 1)
 
 
@@ -99,6 +109,21 @@ class LobbyScreen(QDialog):
 
         # return button
         self.button_back.clicked.connect(log_out)
+        self.button_sport.clicked.connect(self.change_screen_RoomScreen_sport)
+
+    def change_screen_RoomScreen_sport(self):
+        change_screen_RoomScreen(CHAT_ROOM_SPORT, self.name)
+
+
+class RoomsScreen(QDialog):
+    def __init__(self, room, name):
+        super(RoomsScreen, self).__init__()
+        loadUi("ChatScreen.ui", self)
+        self.name = name
+        self.room = room
+
+    def return_to_lobby(self, name):
+        self.button_back.clicked.connect(change_screen_lobby(name))
 
 
 widget = None
